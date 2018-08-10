@@ -115,7 +115,7 @@ while numTries < 7:
     if arr1 == arr:
         winLoss = True
         end(winLoss)
-        break
+        sys.exit()
     
     print(arr1)
 
