@@ -20,6 +20,11 @@ core = "|"
 lLeg = "/"
 rLeg = "\\"
 
+
+#List of words
+l = ["popcorn", "dog", "winery", "interstellar", "mouse", "jazz", "lineage",
+    "hockey", "ghost", "meatball", "cannon", "gumball", "abstract", "integral"]
+
 #Draws the platform and adds on the body after every wrong guess
 #Takes in the number of wrong answers
 def draw(num):
@@ -56,9 +61,22 @@ def draw(num):
           p7 + "\n" +
           p8)
 
+def clearAll():
+    
+    global p1, p2, p3, p4, p5, p6, p7, p8
+    p1 = "    _______"
+    p2 = "   |/      |"
+    p3 = "   |      " 
+    p4 = "   |      "
+    p5 = "   |       " 
+    p6 = "   |      " 
+    p7 = "   |      "
+    p8 = "___|___"
+    
+
 #Outputs end game text
 #Takes in boolean var
-def end(wl):
+def end(wl, arr):
     if wl == True:
         word = ''.join(arr)
         print("The word is: " + word)
@@ -68,6 +86,60 @@ def end(wl):
     else:
         print("You are a murderer")
 
+    usrIn = input("To play again, type 'Yes', otherwise, the game will end ")
+    usrIn = str (usrIn)
+    
+    if 'Yes' in usrIn:
+        clearAll()
+        play()
+    else:
+        sys.exit
+            
+    
+
+def play():
+
+    global l
+
+    r = randint(0, len(l)-1)
+    arr = list(l[r])
+    #blank array for adding already guessed words
+    arr1 = [" "] * len(arr)
+    guessed = []
+    numTries = 0
+    winLoss = False
+        
+    #Game loop
+    while numTries < 7:
+    
+        letter = input("Guess a letter: ")
+        letter = str(letter)
+
+        if letter in guessed:
+            print("Already guessed!")
+
+        elif letter in arr:
+        
+            for x in range(0, len(arr)):
+
+                if arr[x] ==  letter:
+                    arr1[x] = letter
+            
+        else:
+            numTries += 1
+            draw(numTries)
+
+        if arr1 == arr:
+            winLoss = True
+            end(winLoss, arr)
+            sys.exit()
+
+        #prints word with characters that are already guessed
+        print(arr1)
+        guessed.append(letter)
+
+    end(winLoss, arr)
+    
 
 
 print("""
@@ -79,46 +151,6 @@ print("""
         ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝
                                                                         """)
 
-#Play variables
-
-#List of words
-l = ["popcorn", "dog", "winery", "interstellar", "mouse", "jazz", "lineage",
-    "hockey", "ghost", "meatball", "cannon", "gumball", "abstract", "integral"]
-
-r = randint(0, len(l)-1)
-arr = list(l[r])
-arr1 = [" "] * len(arr)
-numTries = 0
-winLoss = False
-
-
-#Game loop
-while numTries < 7:
-    
-    letter = input("Guess a letter: ")
-    letter = str(letter)
-
-    if letter in arr1:
-        print("Already guessed!")
-
-    elif letter in arr:
-        
-        for x in range(0, len(arr)):
-
-            if arr[x] ==  letter:
-                arr1[x] = letter
-            
-    else:
-        numTries += 1
-        draw(numTries)
-
-    if arr1 == arr:
-        winLoss = True
-        end(winLoss)
-        sys.exit()
-    
-    print(arr1)
-
-end(winLoss)
+play()
 
 
