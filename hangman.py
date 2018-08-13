@@ -26,7 +26,7 @@ l = ["popcorn", "dog", "winery", "interstellar", "mouse", "jazz", "lineage",
     "hockey", "ghost", "meatball", "cannon", "gumball", "abstract", "integral"]
 
 #Draws the platform and adds on the body after every wrong guess
-#Takes in the number of wrong answers
+#Parameters: num, number of wrong guessed
 def draw(num):
 
     global p1, p2, p3, p4, p5, p6, p7, p8
@@ -61,6 +61,7 @@ def draw(num):
           p7 + "\n" +
           p8)
 
+#Clears gallow
 def clearAll():
     
     global p1, p2, p3, p4, p5, p6, p7, p8
@@ -75,8 +76,10 @@ def clearAll():
     
 
 #Outputs end game text
-#Takes in boolean var
+#Parameters: wl, boolean var that determines if user won or lost;
+    #arr, array containing the word
 def end(wl, arr):
+    
     if wl == True:
         word = ''.join(arr)
         print("The word is: " + word)
@@ -96,7 +99,7 @@ def end(wl, arr):
         sys.exit
             
     
-
+#Game
 def play():
 
     global l
